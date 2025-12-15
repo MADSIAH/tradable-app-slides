@@ -3,595 +3,1001 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIDE - Pitch Deck</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>EMID - Fintech Pitch Deck</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* THEME: MIDE Neon */
         :root {
-            --bg-color: #050510;
-            --accent-blue: #00f3ff;
-            --accent-purple: #bc13fe;
-            --text-white: #ffffff;
-            --card-bg: #141423; /* Solid Background Color */
-            --border-color: #333;
+            --bg-color: #f8f9fa;
+            --text-color: #1a202c;
+            --primary: #2563eb; /* Fintech Blue */
+            --accent: #f59e0b; /* Coin Gold */
+            --secondary: #64748b;
+            --gaming-purple: #7c3aed;
+            --slide-w: 100vw;
+            --slide-h: 100vh;
         }
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-white);
-            font-family: 'Rajdhani', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            -webkit-print-color-adjust: exact;
-            overflow-x: hidden;
-        }
-
-        .deck-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            width: 100%;
-        }
-
-        .slide-container {
-            width: 1280px;
-            height: 720px;
-            background-color: #0a0a0a;
-            position: relative;
+            color: var(--text-color);
             overflow: hidden;
-            border: 1px solid #333;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            page-break-after: always;
-            flex-shrink: 0;
-            transform-origin: top center;
+            width: 100vw;
+            height: 100vh;
         }
 
-        /* Grid Pattern - Z-index 0 */
-        .slide-container::before {
-            content: '';
+        h1, h2, h3, h4 {
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Decoration (Game Items) --- */
+        .decoration {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .floating-item {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* --- Deck Container --- */
+        #deck {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* --- Slide Styling --- */
+        .slide {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
             pointer-events: none;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: scale(0.95);
+            padding: 2rem 4rem;
+            background: radial-gradient(circle at top right, #eef2ff 0%, #ffffff 40%);
         }
 
-        h1, h2, h3, h4 {
-            font-family: 'Orbitron', sans-serif;
-            text-transform: uppercase;
-            margin: 0;
+        .slide.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: scale(1);
+            z-index: 10;
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .slide-header {
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--primary);
+            padding-left: 1.5rem;
+        }
+
+        .slide-header h2 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .slide-header p {
+            color: var(--secondary);
+            font-size: 1.25rem;
+        }
+
+        /* --- Specific Layouts --- */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-auto-rows: 1fr;
+            gap: 2rem;
+            align-items: stretch;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            align-items: stretch;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            text-align: left;
+            transition: transform 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        /* --- Chart Styling (CSS Only) --- */
+        .chart-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 300px;
+            width: 100%;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--secondary);
+            margin-top: 2rem;
+            position: relative;
+            padding-left: 60px; /* Make space for Y-axis */
+        }
+
+        .y-axis {
+            position: absolute;
+            left: 0;
+            bottom: 20px; /* Align with bottom border line */
+            top: 0;
+            width: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: right;
+            color: var(--secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 15%;
+            height: 100%;
+            justify-content: flex-end;
+        }
+
+        .bar {
+            width: 100%;
+            background: linear-gradient(180deg, var(--primary) 0%, #60a5fa 100%);
+            border-radius: 8px 8px 0 0;
+            transition: height 1s ease-out;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .bar:hover::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -30px;
+            background: #1e293b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .bar-label {
+            margin-top: 10px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* --- Table Styling --- */
+        .financial-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .financial-table th, .financial-table td {
+            padding: 1rem 1.5rem;
+            text-align: right;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .financial-table td:first-child, .financial-table th:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .financial-table th {
+            background: var(--primary);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .financial-table tr:last-child td {
+            border-bottom: none;
+            background: #eff6ff;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* --- Slide 0 Title --- */
+        .title-slide-content {
+            text-align: center;
+            z-index: 2;
+        }
+        
+        .logo-main {
+            width: 180px;
+            height: 180px;
+            margin-bottom: 2rem;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0% { filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.2)); }
+            50% { filter: drop-shadow(0 0 25px rgba(37, 99, 235, 0.5)); }
+            100% { filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.2)); }
+        }
+
+        .main-title {
+            font-size: 6rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #1e293b 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            color: var(--secondary);
+            font-weight: 300;
+        }
+
+        /* --- Timeline --- */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #e2e8f0;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: white;
+            border: 4px solid var(--accent);
+            top: 15px;
+            border-radius: 50%;
             z-index: 1;
         }
 
-        h1 { font-size: 8rem; letter-spacing: -2px; margin-bottom: 10px; }
-        h1 span { color: var(--accent-blue); }
-        h2 { font-size: 3.5rem; margin-bottom: 40px; color: white; }
-        h2 span { color: var(--accent-purple); }
-        p, li { font-size: 1.5rem; line-height: 1.6; color: #cbd5e1; z-index: 1; }
-        .secondary-text { color: #888; font-size: 1.2rem; margin-top: 20px; display: block; }
+        .left { left: 0; text-align: right; }
+        .right { left: 50%; text-align: left; }
+        .left::after { right: -16px; }
+        .right::after { left: -16px; }
 
-        /* LAYOUTS */
-        .title-slide { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center; z-index: 2; }
-        .bleed-layout { display: grid; grid-template-columns: 1fr 1fr; height: 100%; width: 100%; }
-        .bleed-content { padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; z-index: 2; position: relative; }
-        .bleed-visual { height: 100%; width: 100%; background: #111; border-left: 1px solid var(--border-color); position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; z-index: 2; }
-        .tiled-layout { padding: 60px; display: flex; flex-direction: column; height: 100%; }
-        .tile-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; height: 100%; align-items: center; z-index: 2; position: relative;}
-        
-        /* TILES & CARDS */
-        .tile { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border-color); 
-            padding: 40px 30px; 
-            border-radius: 16px; 
-            height: 100%; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: flex-start;
-            text-align: left;
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
             position: relative;
-            z-index: 2; 
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        .chart-layout { padding: 60px; display: flex; flex-direction: column; height: 100%; }
         
-        .chart-area-box {
-            flex-grow: 1;
-            background: var(--card-bg); /* Solid background */
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            margin-top: 20px;
-            padding: 40px 80px; 
-            position: relative;
+        .timeline-content h3 { color: var(--primary); }
+
+        /* --- Prototype & Images --- */
+        .mockup-container {
+            background: #111;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .browser-bar {
             display: flex;
-            align-items: flex-end;
-            justify-content: space-around; 
-            z-index: 2; /* Sit above grid */
+            gap: 8px;
+            padding: 10px;
         }
-
-        /* Components */
-        .logo-mark { width: 80px; height: 80px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 40px; color: #fff; margin-bottom: 20px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; }
+        .dot:nth-child(2) { background: #ffbd2e; }
+        .dot:nth-child(3) { background: #27c93f; }
         
-        .contact-bubble { 
-            background: var(--card-bg); /* Solid background */
-            border: 2px solid var(--accent-blue); 
-            padding: 30px 60px; 
-            border-radius: 50px; 
-            margin-top: 0; 
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2); 
-            position: relative;
-            z-index: 2; /* Sit above grid */
+        .mockup-screen {
+            background: #fff;
+            height: 350px;
+            border-radius: 0 0 10px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            flex-direction: column;
         }
 
-        /* CSS Graphics */
-        .bar-group { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; width: 20%; position: relative; }
-        .bar { width: 100%; border-radius: 8px 8px 0 0; position: relative; transition: height 1s; }
-        .bar-label { margin-top: 20px; text-align: center; color: white; font-size: 1.2rem; white-space: nowrap; }
-        .bar-val { margin-bottom: 10px; text-align: center; font-weight: bold; font-size: 1.8rem; }
-
-        /* Hub Diagram Nodes - Updated for 5 Nodes */
-        .hub-center { width: 120px; height: 120px; background: var(--accent-purple); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-weight: bold; font-size: 24px; z-index: 10; box-shadow: 0 0 40px var(--accent-purple); }
-        
-        .hub-node { 
-            padding: 10px 15px; 
-            background: #222; 
-            border: 1px solid #444; 
-            border-radius: 8px; 
-            color: white; 
-            font-weight: bold; 
-            position: absolute; 
-            width: 160px; 
-            text-align: center; 
-            z-index: 10; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 12px; 
-            transform: translateY(-50%); 
-            font-size: 0.9rem;
-        }
-
-        .hub-line { 
-            position: absolute; 
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); 
-            height: 4px; 
-            transform-origin: left center; 
-            z-index: 1; 
+        /* --- Footer/Nav --- */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
         }
         
-        .icon { width: 40px; height: 40px; fill: var(--accent-blue); margin-bottom: 15px; }
-
-        @media print {
-            body { background: none; display: block; }
-            .deck-wrapper { display: block; padding: 0; }
-            .slide-container { page-break-after: always; margin: 0; border: none; box-shadow: none; width: 100%; height: 100vh; transform: none !important; }
+        .control-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
         }
+
+        .control-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            background: var(--primary);
+            transition: width 0.3s;
+            z-index: 100;
+        }
+
+        .source-link {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 2rem;
+            display: block;
+        }
+
     </style>
 </head>
 <body>
 
-<div class="deck-wrapper" id="deckWrapper">
+<!-- SVG Assets Definition -->
+<svg style="display: none;">
+    <!-- Logo Symbol -->
+    <symbol id="logo-icon" viewBox="0 0 100 100">
+        <path d="M50 5 L95 25 L95 75 L50 95 L5 75 L5 25 Z" fill="#2563eb" opacity="0.1"/>
+        <path d="M50 10 L88 28 L88 72 L50 90 L12 72 L12 28 Z" stroke="#2563eb" stroke-width="4" fill="none"/>
+        <!-- Letter E styled like circuitry -->
+        <path d="M35 35 H65 M35 50 H55 M35 65 H65" stroke="#1a202c" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="65" cy="35" r="3" fill="#f59e0b"/>
+        <circle cx="65" cy="65" r="3" fill="#f59e0b"/>
+    </symbol>
+    
+    <!-- Game Icons -->
+    <symbol id="icon-sword" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M14.5 13.5L11 10L7.5 13.5L4 10L10 4L16 10L12.5 13.5M19 18L21 20L19 22L17 20L15 22L13 20L11 22L14.5 13.5L18 10L21.5 13.5L19 18Z" /> <!-- Simple abstract sword -->
+        <path stroke="currentColor" stroke-width="2" d="M12 14L12 22M9 19L15 19"/>
+    </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </symbol>
+    <symbol id="icon-coin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 8v8M9.5 10a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1-5 0"/>
+    </symbol>
+    <!-- New Icons -->
+    <symbol id="icon-programmer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="16 18 22 12 16 6"></polyline>
+        <polyline points="8 6 2 12 8 18"></polyline>
+    </symbol>
+    <symbol id="icon-money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="5" width="20" height="14" rx="2" />
+        <line x1="12" y1="12" x2="12.01" y2="12" />
+        <line x1="2" y1="12" x2="22" y2="12" opacity="0.1" />
+    </symbol>
+    <symbol id="icon-sales" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 10h14l-4-4" />
+        <path d="M17 14H3l4 4" />
+    </symbol>
+</svg>
 
-    <!-- SLIDE 1: Title -->
-    <div class="slide-container">
-        <div class="title-slide">
-            <div style="margin-bottom: 20px;">
-                <div class="logo-mark" style="margin: 0 auto 20px auto;">M</div>
-                <h1>MIDE</h1>
-                <p style="font-size: 2rem; color: var(--accent-blue); letter-spacing: 4px;">UNITING GAMERS IN ONE ECOSYSTEM</p>
-            </div>
-            
-            <div class="contact-bubble" style="margin-top: 10px; display: flex; flex-direction: column; gap: 5px;">
-                <p style="margin: 0; font-size: 2rem; color: white; font-weight: bold;">Edoardo Schiatti | CEO</p>
-                <p style="margin: 0; font-size: 1.3rem; color: #aaa;">email: edoardo.schiatti@usi.ch</p>
-            </div>
+<div class="progress-bar" id="progressBar"></div>
+
+<div id="deck">
+
+    <!-- Slide 0: Title -->
+    <div class="slide active">
+        <svg class="decoration floating-item" style="top: 10%; left: 10%; width: 100px; color: var(--primary);"><use href="#icon-shield"/></svg>
+        <svg class="decoration floating-item" style="bottom: 15%; right: 10%; width: 80px; color: var(--accent); animation-delay: 1s;"><use href="#icon-coin"/></svg>
+        
+        <div class="title-slide-content">
+            <svg class="logo-main"><use href="#logo-icon"/></svg>
+            <h1 class="main-title">EMID</h1>
+            <p class="subtitle">Empowering the Future of Indie Gaming Commerce</p>
+            <p style="margin-top: 2rem; font-weight: 600; color: var(--primary);">FINTECH PITCH DECK</p>
         </div>
     </div>
 
-    <!-- SLIDE 2: Problem -->
-    <div class="slide-container">
-        <div class="tiled-layout">
-            <h2>The Gaming Economy is <span>Broken</span></h2>
-            <div class="tile-grid">
-                <div class="tile">
-                    <svg class="icon" style="fill: white;" viewBox="0 0 24 24">
-                        <path d="M16,18 L18.29,15.71 L13.41,10.83 L9.41,14.83 L2,7.41 L3.41,6 L9.41,12 L13.41,8 L19.71,14.29 L22,12 L22,18 L16,18 Z"/>
-                    </svg>
-                    <h3>Developer Stagnation</h3>
-                    <p>Small devs miss out on secondary market revenue.</p>
-                    <span class="secondary-text">This revenue is currently lost to unregulated grey market sites.</span>
-                </div>
-                <div class="tile">
-                    <svg class="icon" style="fill: var(--accent-purple);" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                    <h3>The "Skin Trap"</h3>
-                    <p>We own thousands in skins we don't use, but cannot liquidate them safely.</p>
-                    <span class="secondary-text">Billions of dollars in "dead capital" sit in gamer inventories.</span>
-                </div>
-                <div class="tile">
-                    <svg class="icon" style="fill: var(--accent-blue);" viewBox="0 0 24 24">
-                        <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-9 18H9V4h2v16zm4 0h-2V4h2v16zm4 0h-2V4h2v16z M7 20H5V4h2v16z"/>
-                    </svg>
-                    <h3>"Illegal" Sale of Accounts</h3>
-                    <p>Since skins are trapped, players sell entire accounts.</p>
-                    <span class="secondary-text">This breaks TOS and undercuts developer revenue.</span>
-                </div>
+    <!-- Slide 1: Problem -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <h2>The Problem</h2>
+                <p>Indie developers and gamers face a broken economy</p>
             </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 3: Solution (5-NODE HUB WITH INDIE - MOR RESTORED) -->
-    <div class="slide-container">
-        <div class="bleed-layout">
-            <div class="bleed-content">
-                <h2>The <span>MIDE Hub</span></h2>
-                <div style="margin-bottom: 40px;">
-                    <h3>Unified Marketplace</h3>
-                    <p class="secondary-text">A secure hub connecting new and existing games through API partnerships, focusing on Limited Editions & Loot Boxes.</p>
-                </div>
-                <!-- RESTORED MOR TEXT -->
-                <div>
-                    <h3>Merchant of Record</h3>
-                    <p class="secondary-text">We handle compliance, taxes, and fraud, making trading legal and safe for developers.</p>
-                </div>
-            </div>
-            <div class="bleed-visual">
-                <div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-                    <div class="hub-center">MIDE</div>
-                    
-                    <!-- Lines (Length 170px) -->
-                    <!-- Top (Indie) -->
-                    <div class="hub-line" style="width: 170px; transform: rotate(-90deg); left: 50%; top: 50%;"></div>
-                    <!-- Top Left (Steam) -->
-                    <div class="hub-line" style="width: 170px; transform: rotate(200deg); left: 50%; top: 50%;"></div>
-                    <!-- Bottom Left (Roblox) -->
-                    <div class="hub-line" style="width: 170px; transform: rotate(160deg); left: 50%; top: 50%;"></div>
-                    <!-- Top Right (Console) -->
-                    <div class="hub-line" style="width: 170px; transform: rotate(-20deg); left: 50%; top: 50%;"></div>
-                    <!-- Bottom Right (Mobile) -->
-                    <div class="hub-line" style="width: 170px; transform: rotate(20deg); left: 50%; top: 50%;"></div>
-
-                    <!-- Nodes -->
-                    <!-- Top Node (Indie) -->
-                    <div class="hub-node" style="top: calc(50% - 170px); left: 50%; transform: translate(-50%, -50%);">
-                        <svg class="icon" style="width: 20px; height: 20px; margin: 0; fill: #00ff00;" viewBox="0 0 24 24"><path d="M21 16H3V4h18v12zm0-14H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-10 7h2v2h-2zm-4 0h2v2H7zm8 0h2v2h-2zm-4-4h2v2h-2z"/></svg> Indie Games
-                    </div>
-
-                    <!-- Top Left Node (Steam) - Flipped (Text | Icon) -->
-                    <div class="hub-node" style="right: calc(50% + 140px); top: calc(50% - 60px); flex-direction: row-reverse;">
-                        <svg class="icon" style="width: 20px; height: 20px; margin: 0; fill: white;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg> Steam
-                    </div>
-                    <!-- Bottom Left Node (Roblox) - Flipped (Text | Icon) -->
-                    <div class="hub-node" style="right: calc(50% + 140px); top: calc(50% + 60px); flex-direction: row-reverse;">
-                        <svg class="icon" style="width: 20px; height: 20px; margin: 0; fill: white;" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg> Roblox
-                    </div>
-                    
-                    <!-- Top Right Node (Console) - Standard (Icon | Text) -->
-                    <div class="hub-node" style="left: calc(50% + 140px); top: calc(50% - 60px);">
-                        <svg class="icon" style="width: 20px; height: 20px; margin: 0; fill: #107C10;" viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg> Console
-                    </div>
-                    <!-- Bottom Right Node (Mobile) - Standard (Icon | Text) -->
-                    <div class="hub-node" style="left: calc(50% + 140px); top: calc(50% + 60px);">
-                        <svg class="icon" style="width: 20px; height: 20px; margin: 0; fill: white;" viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg> Mobile Gaming
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 4: Market (FOCUSED CHART v19 STYLE + 100B TEXT) -->
-    <div class="slide-container">
-        <div class="chart-layout">
-            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                <div>
-                    <h2>Market <span>Opportunity</span></h2>
-                    <!-- Top Level -->
-                    <p>Global In-Game Purchases > <strong>$250 Billion</strong></p>
-                    <!-- Niche Level -->
-                    <span class="secondary-text">Addressable Skin Economy > <strong>$100 Billion</strong></span>
-                </div>
-            </div>
-            
-            <div class="chart-area-box">
-                <!-- Bar 1: CS2 ($6B) - 100% height -->
-                <div class="bar-group">
-                    <div class="bar-val" style="color: var(--accent-blue);">$6B</div>
-                    <div class="bar" style="height: 100%; background: var(--accent-blue);"></div>
-                    <div class="bar-label">CS2 Skin Trading</div>
-                </div>
-
-                <!-- Bar 2: Xsolla ($3B) - 50% height -->
-                <div class="bar-group">
-                    <div class="bar-val" style="color: var(--accent-purple);">$3B</div>
-                    <div class="bar" style="height: 50%; background: var(--accent-purple);"></div>
-                    <div class="bar-label">Xsolla (Payments)</div>
-                </div>
-
-                <!-- Bar 3: MIDE Goal ($2B) - 33% height -->
-                <div class="bar-group">
-                    <div class="bar-val" style="color: white;">$2B</div>
-                    <div class="bar" style="height: 33.3%; background: white;"></div>
-                    <div class="bar-label">MIDE Goal</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 5: Business Model -->
-    <div class="slide-container">
-        <div class="tiled-layout">
-            <h2>Revenue <span>Streams</span></h2>
-            <div class="tile-grid">
-                <div class="tile">
-                    <div style="text-align: center; width: 100%;">
-                        <h1 style="color: var(--accent-blue);">5%</h1>
-                        <h3>Transaction Fee</h3>
-                        <span class="secondary-text">Charged on every P2P trade executed on the platform.</span>
-                    </div>
-                </div>
-                <div class="tile">
-                    <div style="text-align: center; width: 100%;">
-                        <h1 style="color: var(--accent-purple);">1%</h1>
-                        <h3>Minting Fee</h3>
-                        <span class="secondary-text">Charged when users purchase MIDE coins directly.</span>
-                    </div>
-                </div>
-                <div class="tile">
-                    <div style="text-align: center; width: 100%;">
-                        <h1 style="color: white; font-size: 3rem; margin-bottom: 20px;">PROMO</h1>
-                        <h3>Promoted Placement</h3>
-                        <span class="secondary-text">Developers pay to have their items featured at the top of the marketplace.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 6: Traction -->
-    <div class="slide-container">
-        <div class="bleed-layout">
-            <div class="bleed-content">
-                <h2>Traction & <span>Roadmap</span></h2>
-                <div style="margin-bottom: 30px;">
-                    <h3>Current Status</h3>
-                    <ul style="margin-top: 10px; padding-left: 20px;">
-                        <li>MVP Live: <strong>trade.trifonov.app</strong></li>
-                        <li>Core Team Assembled</li>
-                        <li>Initial Liquidity Pool Established</li>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon">⚠️</div>
+                    <h3>Hard to Monetize</h3>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black; font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.5rem;">Small developers struggle to monetize efficiently</li>
+                        <li>Consumers hesitate to buy, knowing money is "lost" forever</li>
                     </ul>
                 </div>
-                <div style="border-left: 4px solid var(--accent-blue); padding-left: 20px;">
-                    <h3>Roadmap</h3>
-                    <p><strong>Q1:</strong> Partner with 5 Indie Devs</p>
-                    <p><strong>Q2:</strong> Integrate "Trade Button" API</p>
-                    <p><strong>Q3:</strong> Aggressive Marketing (>10k items)</p>
+                <div class="card">
+                    <div class="card-icon">👻</div>
+                    <h3>Trust Issues</h3>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black; font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.5rem;">Gamers fear games might "die" or servers close</li>
+                        <li>Lack of trust kills purchase conversion rates</li>
+                    </ul>
                 </div>
-            </div>
-            <div class="bleed-visual" style="background: #0f172a;">
-                <svg viewBox="0 0 500 300" style="width: 80%; height: auto;">
-                    <line x1="50" y1="250" x2="450" y2="250" stroke="#333" stroke-width="2"/>
-                    <line x1="50" y1="50" x2="50" y2="250" stroke="#333" stroke-width="2"/>
-                    <path d="M 50 250 Q 150 240 250 150 T 450 50" fill="none" stroke="var(--accent-blue)" stroke-width="5"/>
-                    <circle cx="50" cy="250" r="6" fill="white"/>
-                    <circle cx="250" cy="150" r="6" fill="white"/>
-                    <circle cx="450" cy="50" r="6" fill="white"/>
-                    <text x="50" y="280" fill="#888" text-anchor="middle">Launch</text>
-                    <text x="250" y="280" fill="#888" text-anchor="middle">Partnerships</text>
-                    <text x="450" y="280" fill="#888" text-anchor="middle">Scale</text>
-                </svg>
+                <div class="card">
+                    <div class="card-icon">👀</div>
+                    <h3>Visibility Gap</h3>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black; font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.5rem;">Small studios lack marketing budgets to stand out</li>
+                        <li>Great games go unnoticed in a saturated market</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 7: Marketing -->
-    <div class="slide-container">
-        <div class="bleed-layout">
-            <div class="bleed-content">
-                <h2>Go-To-Market <span>Strategy</span></h2>
+    <!-- Slide 2: Solution -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <h2>The Solution: EMID</h2>
+                <p>A compliant, secure marketplace for trading in-game assets</p>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🔄 Enabling Trades</h3>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
+                        <li style="margin-bottom: 0.5rem;">Legal and safe trading environment</li>
+                        <li style="margin-bottom: 0.5rem;">Fully compliant with Game TOS</li>
+                        <li>Assets retain real-world value</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>⚖️ MOR & Legal Wrapper</h3>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
+                        <li style="margin-bottom: 0.5rem;">We act as the Merchant of Record</li>
+                        <li style="margin-bottom: 0.5rem;">Developers just plug us in</li>
+                        <li>We handle all legal complexity</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🛡️ Asset Retention</h3>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
+                        <li style="margin-bottom: 0.5rem;">Banned players retain asset ownership</li>
+                        <li style="margin-bottom: 0.5rem;">Market access remains open for selling</li>
+                        <li>Investment is never lost due to bans</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>💰 Sustainable Revenue</h3>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
+                        <li style="margin-bottom: 0.5rem;">Developers earn fees on every trade</li>
+                        <li>Turns secondary market into primary revenue</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Market Opportunity -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <h2>Market Opportunity</h2>
+                <p>Explosive growth in the Indie Game Sector (2027-2029 Estimate)</p>
+            </div>
+            
+            <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                <h4 style="margin-bottom: 1rem;">Total Addressable Market (Indie Games)</h4>
+                <div class="chart-container">
+                    <div class="y-axis">
+                        <span>$125B</span>
+                        <span>$100B</span>
+                        <span>$75B</span>
+                        <span>$50B</span>
+                        <span>$25B</span>
+                        <span>$0</span>
+                    </div>
+                    <!-- Scale Max: $125B -->
+                    <!-- 2027: $70B / 125 = 56% -->
+                    <div class="bar-group">
+                        <div class="bar" style="height: 56%;" data-value="$70B"></div>
+                        <div class="bar-label">2027</div>
+                    </div>
+                    <!-- 2028: $84B / 125 = 67.2% -->
+                    <div class="bar-group">
+                        <div class="bar" style="height: 67.2%;" data-value="$84B"></div>
+                        <div class="bar-label">2028</div>
+                    </div>
+                    <!-- 2029: $100.8B / 125 = 80.64% -->
+                    <div class="bar-group">
+                        <div class="bar" style="height: 80.6%;" data-value="$100.8B"></div>
+                        <div class="bar-label">2029</div>
+                    </div>
+                </div>
+                <div style="margin-top: 2rem; text-align: center;">
+                    <div>
+                        <h4>Obtainable Market (SOM)</h4>
+                        <p style="font-size: 2.5rem; color: var(--primary); font-family: 'Rajdhani';">$5.04 Billion</p>
+                        <p style="color: #64748b; font-size: 0.9rem;">By 2029 (5% of Total Market)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Revenue Streams -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <h2>Revenue Streams</h2>
+                <p>How we monetize the ecosystem</p>
+            </div>
+            <div class="grid-3">
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;">5%</div>
+                    <h3 style="color: black;">Trade Fee</h3>
+                    <p>Commission on every peer-to-peer asset exchange on the platform</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;">5%</div>
+                    <h3 style="color: black;">Minting Fee</h3>
+                    <p>Initial fee when buying our currency to buy in game content<br><span style="font-size: 0.9rem; color: #64748b;">(fixed fee of 0.5$)</span></p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;">Ads</div>
+                    <h3 style="color: black;">Advertising</h3>
+                    <p>Strategic placements for games and gaming hardware within the marketplace</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Roadmap -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <h2>Roadmap</h2>
+                <p>Our path to market dominance</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3>Phase 1 (3 Months)</h3>
+                        <p>System Architecture Design & Core Implementation</p>
+                    </div>
+                </div>
+                <div class="timeline-container right">
+                    <div class="timeline-content">
+                        <h3>Phase 2 (6 Months)</h3>
+                        <p>Full Development & Client-side API Integration</p>
+                    </div>
+                </div>
+                <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3>Phase 3 (3 Months)</h3>
+                        <p>Penetration Testing & Load Testing for Security. Beta Launch</p>
+                    </div>
+                </div>
+                <div class="timeline-container right">
+                    <div class="timeline-content">
+                        <h3>Phase 4 (1 Year)</h3>
+                        <p>Official Launch, Aggressive Marketing & Ecosystem Growth</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Marketing -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <h2>Marketing Strategy</h2>
+                <p>Building a community-driven economy</p>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🤝 Developer Partnerships</h3>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
+                        <li style="margin-bottom: 0.5rem;">Direct integration incentives</li>
+                        <li>Developers become advocates via revenue share</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>📢 Influencer Campaigns</h3>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
+                        <li style="margin-bottom: 0.5rem;">Targeted ads on Twitch and YouTube</li>
+                        <li>Streamers demonstrating live trading</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🎪 Events & Conventions</h3>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
+                        <li style="margin-bottom: 0.5rem;">Booths at PAX, GDC, and Gamescom</li>
+                        <li>Direct onboarding of indie studios</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🎮 Organic Growth</h3>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
+                        <li style="margin-bottom: 0.5rem;">Games themselves market EMID</li>
+                        <li>In-game "Trade on EMID" UI integration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Team -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <h2>Team</h2>
+            </div>
+            
+            <div class="grid-2">
+                <!-- Edoardo -->
+                <div class="card">
+                    <div class="card-icon"><svg style="width: 30px; height: 30px; color: white;"><use href="#logo-icon"/></svg></div>
+                    <h3>Edoardo Schiatti</h3>
+                    <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem; text-transform: uppercase;">CEO</p>
+                    <p>Master in digital finance, previous ventures</p>
+                </div>
+
+                <!-- Dobri -->
+                <div class="card">
+                    <div class="card-icon"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-programmer"/></svg></div>
+                    <h3>Dobri Trifonov</h3>
+                    <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem; text-transform: uppercase;">CTO</p>
+                    <p>Bachelor in informatics, master in fintech, expert in POS systems</p>
+                </div>
+
+                <!-- Ilya -->
+                <div class="card">
+                    <div class="card-icon"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-money"/></svg></div>
+                    <h3>Ilya Neuhen</h3>
+                    <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem; text-transform: uppercase;">CFO</p>
+                    <p>Master in finance and fintech, trading and balance sheet analyst</p>
+                </div>
+
+                <!-- Massimiliano -->
+                <div class="card">
+                    <div class="card-icon"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-sales"/></svg></div>
+                    <h3>Massimiliano Nicol</h3>
+                    <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem; text-transform: uppercase;">CMO</p>
+                    <p>Master in Fintech, works in sales and marketing</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Financials -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <h2>Financial Projections</h2>
+                <p>Projected Growth 2026-2029</p>
+            </div>
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>2026</th>
+                        <th>2027</th>
+                        <th>2028</th>
+                        <th>2029</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Team Size</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Market Share</td>
+                        <td>-</td>
+                        <td>0.1%</td>
+                        <td>1.0%</td>
+                        <td>5.0%</td>
+                    </tr>
+                    <tr>
+                        <td>EMID Market Volume</td>
+                        <td>-</td>
+                        <td>$70M</td>
+                        <td>$840M</td>
+                        <td>$5.04B</td>
+                    </tr>
+                    <tr>
+                        <td>Traded Volume</td>
+                        <td>-</td>
+                        <td>$8.4M</td>
+                        <td>$100.8M</td>
+                        <td>$604.8M</td>
+                    </tr>
+                    <tr>
+                        <td>Revenue</td>
+                        <td>$0</td>
+                        <td>$840,000</td>
+                        <td>$10,080,000</td>
+                        <td>$60,480,000</td>
+                    </tr>
+                    <tr>
+                        <td>Expenses</td>
+                        <td>-$146,000</td>
+                        <td>-$159,000</td>
+                        <td>-$850,000</td>
+                        <td>-$3,500,000</td>
+                    </tr>
+                    <tr style="background: #f0fdf4;">
+                        <td style="font-weight: bold; color: black;">EBITDA</td>
+                        <td style="color: #dc2626; font-weight: bold;">-$146,000</td>
+                        <td style="color: #166534; font-weight: bold;">$681,000</td>
+                        <td style="color: #166534; font-weight: bold;">$9,230,000</td>
+                        <td style="color: #166534; font-weight: bold;">$56,980,000</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 1rem; font-size: 0.8rem; color: #94a3b8; text-align: center;">Source: MIDE Financial Model 2026-2029</p>
+        </div>
+    </div>
+
+    <!-- Slide 9: Ask (General) -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <h2>The Ask</h2>
+                <p>Investment Opportunity</p>
+            </div>
+            
+            <div class="card" style="max-width: 900px; margin: 0 auto; padding: 2rem;">
+                <div style="text-align: center; margin-bottom: 2rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 1.5rem;">
+                    <h3 style="font-size: 1.2rem; color: var(--secondary); margin-bottom: 0.5rem; letter-spacing: 2px;">SEED ROUND</h3>
+                    <div style="font-size: 4.5rem; font-family: 'Rajdhani'; color: var(--primary); font-weight: 700; line-height: 1;">$250,000</div>
+                    <div style="font-size: 1.5rem; font-weight: 600; color: var(--text-color); margin-top: 0.5rem;">for 10% Equity</div>
+                </div>
+
+                <h4 style="margin-bottom: 1rem; color: var(--secondary); text-transform: uppercase; font-size: 0.9rem;">Allocation of Funds</h4>
                 
-                <div style="margin-bottom: 40px;">
-                    <h3 style="color: var(--accent-blue);">B2C: Gamers</h3>
-                    <ul style="margin-top: 15px; padding-left: 20px;">
-                        <li><strong>Community:</strong> Dedicated Discord Server.</li>
-                        <li><strong>Socials:</strong> Self-promotion via Twitter/X threads.</li>
-                        <li><strong>Paid Media:</strong> Ads on Twitch & YouTube.</li>
-                        <li><strong>Partnerships:</strong> Specific Skin YouTubers.</li>
-                    </ul>
+                <!-- Stacked Bar Visualization -->
+                <div style="width: 100%; height: 30px; background: #e2e8f0; border-radius: 15px; overflow: hidden; display: flex; margin-bottom: 1.5rem;">
+                    <div style="width: 70%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold;"></div>
+                    <div style="width: 29%; background: var(--accent); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold;"></div>
+                    <div style="width: 1%; background: #10b981;"></div>
                 </div>
-            </div>
-            <div class="bleed-content" style="background: var(--card-bg);">
-                <div>
-                    <h3 style="color: var(--accent-purple);">B2B: Developers</h3>
-                    <ul style="margin-top: 15px; padding-left: 20px;">
-                        <li><strong>1. Extra Revenue:</strong> For smaller devs.</li>
-                        <li><strong>2. Legal Trading:</strong> Safe alternative.</li>
-                        <li><strong>3. Compliance:</strong> Merchant of Record.</li>
-                        <li><strong>4. Exposure:</strong> Cross-game promo.</li>
-                    </ul>
+
+                <!-- Legend/Details -->
+                <div class="grid-3" style="gap: 1rem;">
+                    <div style="text-align: center;">
+                        <div style="color: var(--primary); font-size: 2.5rem; font-weight: 700; font-family: 'Rajdhani';">70%</div>
+                        <div style="font-weight: 700; margin-bottom: 0.2rem;">Salaries</div>
+                        <div style="font-size: 0.9rem; color: var(--secondary);">(2 Years Runway)</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="color: var(--accent); font-size: 2.5rem; font-weight: 700; font-family: 'Rajdhani';">29%</div>
+                        <div style="font-weight: 700; margin-bottom: 0.2rem;">Marketing</div>
+                        <div style="font-size: 0.9rem; color: var(--secondary);">Launch Campaign</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="color: #10b981; font-size: 2.5rem; font-weight: 700; font-family: 'Rajdhani';">1%</div>
+                        <div style="font-weight: 700; margin-bottom: 0.2rem;">Infrastructure</div>
+                        <div style="font-size: 0.9rem; color: var(--secondary);">Server Costs</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 8: Team -->
-    <div class="slide-container">
-        <div class="tiled-layout">
-            <h2>The <span>Team</span></h2>
-            <div class="tile-grid" style="grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 20px;">
-                <div class="tile" style="padding: 30px;">
-                    <h3 style="color: var(--accent-blue);">Edoardo Schiatti</h3>
-                    <p style="font-weight: bold;">CEO</p>
-                    <span class="secondary-text">BSc Eco & Mgmt, MSc Digital Finance. Previous Ventures.</span>
+    <!-- Slide 10: Prototype (General) -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <h2>Prototype</h2>
+                <p>Experience the Platform</p>
+            </div>
+            <div class="mockup-container">
+                <div class="browser-bar">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
                 </div>
-                <div class="tile" style="padding: 30px;">
-                    <h3 style="color: var(--accent-purple);">Dobri Trifonov</h3>
-                    <p style="font-weight: bold;">CTO</p>
-                    <span class="secondary-text">BSc Informatics, MSc Fintech. Expert in POS Systems.</span>
-                </div>
-                <div class="tile" style="padding: 30px;">
-                    <h3 style="color: white;">Ilya Neuhen</h3>
-                    <p style="font-weight: bold;">CFO</p>
-                    <span class="secondary-text">MSc Finance. Trading & Balance Sheet Analysis.</span>
-                </div>
-                <div class="tile" style="padding: 30px;">
-                    <h3 style="color: #888;">Massimiliano Nicol</h3>
-                    <p style="font-weight: bold;">CMO</p>
-                    <span class="secondary-text">Sales Veteran. Corporate & Door-to-Door Experience.</span>
+                <div class="mockup-screen">
+                    <div style="text-align: center;">
+                        <svg style="width: 60px; height: 60px; margin-bottom: 1rem; color: #ccc;"><use href="#logo-icon"/></svg>
+                        <h3 style="color: #333;">Live Demo</h3>
+                        <div style="width: 150px; height: 150px; background: #eee; margin: 1rem auto; display: flex; align-items: center; justify-content: center;">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://trade.trifonov.app/" alt="QR Code to trade.trifonov.app">
+                        </div>
+                        <p style="color: #666;">Scan to view mobile trade interface</p>
+                    </div>
                 </div>
             </div>
+            <p style="text-align: center; margin-top: 2rem;">Visit <strong>trade.trifonov.app</strong> for live demo</p>
         </div>
     </div>
 
-    <!-- SLIDE 9: Financials -->
-    <div class="slide-container">
-        <div class="chart-layout">
-            <h2>Financial <span>Projections</span></h2>
-            <div style="display: flex; gap: 40px; margin-bottom: 20px;">
-                <div>
-                    <h3>Break-even</h3>
-                    <span class="secondary-text">Expected in Month 18.</span>
-                </div>
-                <div>
-                    <h3>Growth</h3>
-                    <span class="secondary-text">15% MoM projected revenue.</span>
-                </div>
-            </div>
+    <!-- Slide 11: Contact -->
+    <div class="slide">
+        <div class="slide-content" style="text-align: center;">
+            <h1 style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;">Thank You</h1>
+            <p style="font-size: 1.5rem; margin-bottom: 3rem;">Let's build the future of gaming economies</p>
             
-            <div class="chart-area-box">
-                <!-- Multi Bar Chart (Q1-Q4) -->
-                <div style="display: flex; gap: 40px; height: 100%; align-items: flex-end;">
-                    <!-- Q1 -->
-                    <div style="display: flex; gap: 5px; align-items: flex-end; height: 100%; position: relative;">
-                        <div class="bar" style="height: 10%; width: 30px; background: var(--accent-blue);"></div>
-                        <div class="bar" style="height: 30%; width: 30px; background: var(--accent-purple);"></div>
-                        <p style="position: absolute; bottom: -40px; width: 100%; text-align: center; color: white; white-space: nowrap; left: 50%; transform: translateX(-50%); font-size: 1rem;">Q1 2025</p>
-                    </div>
-                    <!-- Q2 -->
-                    <div style="display: flex; gap: 5px; align-items: flex-end; height: 100%; position: relative;">
-                        <div class="bar" style="height: 25%; width: 30px; background: var(--accent-blue);"></div>
-                        <div class="bar" style="height: 35%; width: 30px; background: var(--accent-purple);"></div>
-                        <p style="position: absolute; bottom: -40px; width: 100%; text-align: center; color: white; white-space: nowrap; left: 50%; transform: translateX(-50%); font-size: 1rem;">Q2 2025</p>
-                    </div>
-                    <!-- Q3 -->
-                    <div style="display: flex; gap: 5px; align-items: flex-end; height: 100%; position: relative;">
-                        <div class="bar" style="height: 50%; width: 30px; background: var(--accent-blue);"></div>
-                        <div class="bar" style="height: 45%; width: 30px; background: var(--accent-purple);"></div>
-                        <p style="position: absolute; bottom: -40px; width: 100%; text-align: center; color: white; white-space: nowrap; left: 50%; transform: translateX(-50%); font-size: 1rem;">Q3 2025</p>
-                    </div>
-                    <!-- Q4 -->
-                    <div style="display: flex; gap: 5px; align-items: flex-end; height: 100%; position: relative;">
-                        <div class="bar" style="height: 80%; width: 30px; background: var(--accent-blue);"></div>
-                        <div class="bar" style="height: 60%; width: 30px; background: var(--accent-purple);"></div>
-                        <p style="position: absolute; bottom: -40px; width: 100%; text-align: center; color: white; white-space: nowrap; left: 50%; transform: translateX(-50%); font-size: 1rem;">Q4 2025</p>
-                    </div>
-                </div>
-                
-                <div style="position: absolute; top: 20px; right: 20px; text-align: right;">
-                    <p style="color: var(--accent-blue);">■ Revenue</p>
-                    <p style="color: var(--accent-purple);">■ Costs</p>
-                </div>
+            <div style="display: inline-block; text-align: left; background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <p><strong>Email:</strong> Edoardo.schiatti@usi.ch</p>
+                <p><strong>Website:</strong> trade.trifonov.app</p>
+                <p><strong>Address:</strong> Lugano, Switzerland</p>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 10: Ask -->
-    <div class="slide-container">
-        <div class="bleed-layout">
-            <div class="bleed-content" style="text-align: center;">
-                <h1 style="color: var(--accent-blue); font-size: 10rem;">$250k</h1>
-                <h3>Pre-Seed Round</h3>
-                <span class="secondary-text">for 10% Equity</span>
+    <!-- Slide 12: Sources -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <h2>Sources</h2>
+                <p>Data and references used in this presentation</p>
             </div>
-            <div class="bleed-content" style="background: var(--card-bg);">
-                <h2>Use of <span>Funds</span></h2>
-                <div style="margin-top: 40px;">
-                    <p><strong>40% Development</strong></p>
-                    <span class="secondary-text">AWS, Security, API Build.</span>
-                </div>
-                <div style="margin-top: 20px;">
-                    <p><strong>30% Personnel</strong></p>
-                    <span class="secondary-text">Core Team Salaries.</span>
-                </div>
-                <div style="margin-top: 20px;">
-                    <p><strong>30% Marketing</strong></p>
-                    <span class="secondary-text">User Acquisition & Partnerships.</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 11: Contact -->
-    <div class="slide-container">
-        <div class="title-slide">
-            <div class="logo-mark">M</div>
-            <h1>Join the Ecosystem</h1>
-            
-            <div style="margin: 40px 0; background: white; padding: 20px; border-radius: 10px;">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://trade.trifonov.app/" alt="QR Code" style="display: block;">
-            </div>
-
-            <p style="color: var(--accent-blue); font-weight: bold;">trade.trifonov.app</p>
-            <span class="secondary-text">edoardo.schiatti@usi.ch</span>
-        </div>
-    </div>
-
-    <!-- SLIDE 12: Sources -->
-    <div class="slide-container">
-        <div class="tiled-layout">
-            <h2>References & <span>Sources</span></h2>
-            <div style="padding: 40px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px;">
-                <ol style="color: #ccc; font-size: 1.4rem; line-height: 2;">
-                    <li><strong>Xsolla Valuation:</strong> Based on public investment rounds and market analysis (Approx $3B).</li>
-                    <li><strong>Market Size:</strong> Global Skin Economy Report 2024 / CS2 Market Cap ($6B). Total Addressable Market estimated >$10B.</li>
-                    <li><strong>Competitor Data:</strong> Skinport, CS.Money public fee structures.</li>
-                    <li><strong>Growth Proxy:</strong> Comparative analysis of Collectible Markets.</li>
-                </ol>
-            </div>
+            <ul style="list-style: none; padding: 0;">
+                <li style="background: white; padding: 1rem; border-bottom: 1px solid #eee;">
+                    <strong>Market Data:</strong> MIDE Financial Model (2026-2029 Projections)
+                </li>
+                <li style="background: white; padding: 1rem; border-bottom: 1px solid #eee;">
+                    <strong>Website & Concept:</strong> https://trade.trifonov.app/
+                </li>
+                <li style="background: white; padding: 1rem; border-bottom: 1px solid #eee;">
+                    <strong>Assets:</strong> Generated Icons (SVG), Font Awesome / Google Fonts (Inter, Rajdhani)
+                </li>
+            </ul>
         </div>
     </div>
 
 </div>
 
-<script>
-    /* AUTO-SCALING SCRIPT */
-    function scaleDeck() {
-        const slides = document.querySelectorAll('.slide-container');
-        const wrapper = document.getElementById('deckWrapper');
-        const baseWidth = 1280;
-        const availableWidth = window.innerWidth - 40; 
-        
-        let scaleFactor = 1;
-        if (availableWidth < baseWidth) {
-            scaleFactor = availableWidth / baseWidth;
-        }
+<!-- Navigation Controls -->
+<div class="controls">
+    <button class="control-btn" onclick="prevSlide()">← Prev</button>
+    <button class="control-btn" onclick="nextSlide()">Next →</button>
+</div>
 
-        slides.forEach(slide => {
-            slide.style.transform = `scale(${scaleFactor})`;
-            slide.style.marginBottom = `-${720 * (1 - scaleFactor)}px`; 
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const progressBar = document.getElementById('progressBar');
+    const totalSlides = slides.length;
+
+    function updateSlide() {
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active');
+            if (index === currentSlide) {
+                slide.classList.add('active');
+            }
         });
+        
+        // Update progress bar
+        const progress = ((currentSlide + 1) / totalSlides) * 100;
+        progressBar.style.width = `${progress}%`;
     }
 
-    window.addEventListener('load', scaleDeck);
-    window.addEventListener('resize', scaleDeck);
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) {
+            currentSlide++;
+            updateSlide();
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateSlide();
+        }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') nextSlide();
+        if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    // Initialize
+    updateSlide();
 </script>
 
 </body>
