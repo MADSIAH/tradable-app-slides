@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EMID - Fintech Pitch Deck</title>
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
@@ -76,19 +75,16 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            /* CHANGED: Reverted to center alignment so title moves with content */
             justify-content: center; 
             align-items: center;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.5s ease, transform 0.5s ease;
             transform: scale(0.95);
-            /* Standard padding */
             padding: 2rem 4rem;
             background: radial-gradient(circle at top right, #eef2ff 0%, #ffffff 40%);
         }
 
-        /* Special class for Title and Thank You slides to remain centered */
         .slide.centered {
             justify-content: center;
             padding: 2rem 4rem;
@@ -106,11 +102,10 @@
             width: 100%;
             position: relative;
             z-index: 2;
-            /* Removed fixed height flex layout */
         }
 
         .slide-header {
-            margin-bottom: 2rem; /* Restored margin */
+            margin-bottom: 2rem; 
             border-left: 5px solid var(--primary);
             padding-left: 1.5rem;
         }
@@ -171,11 +166,18 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 1rem;
-            font-size: 1.5rem;
-            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* SVG Sizing inside cards */
+        .card-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: white;
+            stroke-width: 2;
+            fill: none;
         }
         
-        /* New Style for Team Images */
         .card-image {
             width: 80px;
             height: 80px;
@@ -187,7 +189,6 @@
             margin-left: 1.5rem;
         }
 
-        /* Specific style for Team Cards to align image right */
         .team-card {
             display: flex;
             flex-direction: row;
@@ -473,51 +474,96 @@
 </head>
 <body>
 
-<!-- SVG Assets Definition -->
 <svg style="display: none;">
-    <!-- Logo Symbol -->
     <symbol id="logo-icon" viewBox="0 0 100 100">
         <path d="M50 5 L95 25 L95 75 L50 95 L5 75 L5 25 Z" fill="#2563eb" opacity="0.1"/>
         <path d="M50 10 L88 28 L88 72 L50 90 L12 72 L12 28 Z" stroke="#2563eb" stroke-width="4" fill="none"/>
-        <!-- Letter E styled like circuitry -->
         <path d="M35 35 H65 M35 50 H55 M35 65 H65" stroke="#1a202c" stroke-width="6" stroke-linecap="round"/>
         <circle cx="65" cy="35" r="3" fill="#f59e0b"/>
         <circle cx="65" cy="65" r="3" fill="#f59e0b"/>
     </symbol>
     
-    <!-- Game Icons -->
     <symbol id="icon-sword" viewBox="0 0 24 24">
-        <path fill="currentColor" d="M14.5 13.5L11 10L7.5 13.5L4 10L10 4L16 10L12.5 13.5M19 18L21 20L19 22L17 20L15 22L13 20L11 22L14.5 13.5L18 10L21.5 13.5L19 18Z" /> <!-- Simple abstract sword -->
+        <path fill="currentColor" d="M14.5 13.5L11 10L7.5 13.5L4 10L10 4L16 10L12.5 13.5M19 18L21 20L19 22L17 20L15 22L13 20L11 22L14.5 13.5L18 10L21.5 13.5L19 18Z" />
         <path stroke="currentColor" stroke-width="2" d="M12 14L12 22M9 19L15 19"/>
     </symbol>
-    <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
     </symbol>
-    <symbol id="icon-coin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <symbol id="icon-coin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="9"/>
         <path d="M12 8v8M9.5 10a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1-5 0"/>
     </symbol>
-    <!-- New Icons -->
-    <symbol id="icon-programmer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="16 18 22 12 16 6"></polyline>
-        <polyline points="8 6 2 12 8 18"></polyline>
+
+    <symbol id="icon-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
     </symbol>
+
+    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+    </symbol>
+
+    <symbol id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+    </symbol>
+
+    <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 4 23 10 17 10"></polyline>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+    </symbol>
+
+    <symbol id="icon-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2v20"></path>
+        <path d="M2 12h20"></path>
+        <path d="M2 12l5 6"></path>
+        <path d="M22 12l-5 6"></path>
+        <path d="M12 2l-5 6"></path>
+        <path d="M12 2l5 6"></path>
+    </symbol>
+
     <symbol id="icon-money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="2" y="5" width="20" height="14" rx="2" />
         <line x1="12" y1="12" x2="12.01" y2="12" />
         <line x1="2" y1="12" x2="22" y2="12" opacity="0.1" />
     </symbol>
-    <symbol id="icon-sales" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M7 10h14l-4-4" />
-        <path d="M17 14H3l4 4" />
+
+    <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+        <circle cx="9" cy="7" r="4"></circle>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
     </symbol>
+
+    <symbol id="icon-megaphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 8.35L14.5 5.5l-3.5 6.5L14.5 18.5l7.5-2.85V8.35z"></path>
+        <path d="M2 12h3"></path>
+        <path d="M14.5 12H22"></path>
+        <path d="M14.5 18.5L11 22"></path>
+        <path d="M14.5 5.5L11 2"></path>
+    </symbol>
+    
+    <symbol id="icon-ticket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 7v2a3 3 0 0 1 3 3 3 3 0 0 1-3 3v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2a3 3 0 0 1-3-3 3 3 0 0 1 3-3V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"></path>
+    </symbol>
+
+    <symbol id="icon-gamepad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+        <path d="M6 12h4"></path>
+        <path d="M8 10v4"></path>
+        <line x1="15" y1="13" x2="15.01" y2="13"></line>
+        <line x1="18" y1="11" x2="18.01" y2="11"></line>
+    </symbol>
+
 </svg>
 
 <div class="progress-bar" id="progressBar"></div>
 
 <div id="deck">
 
-    <!-- Slide 0: Title -->
     <div class="slide centered active">
         <svg class="decoration floating-item" style="top: 10%; left: 10%; width: 100px; color: var(--primary);"><use href="#icon-shield"/></svg>
         <svg class="decoration floating-item" style="bottom: 15%; right: 10%; width: 80px; color: var(--accent); animation-delay: 1s;"><use href="#icon-coin"/></svg>
@@ -530,7 +576,6 @@
         </div>
     </div>
 
-    <!-- Slide 1: Problem -->
     <div class="slide">
         <div class="slide-content">
             <div class="slide-header">
@@ -539,7 +584,7 @@
             </div>
             <div class="grid-3">
                 <div class="card">
-                    <div class="card-icon">⚠️</div>
+                    <div class="card-icon"><svg><use href="#icon-alert"/></svg></div>
                     <h3>Hard to Monetize</h3>
                     <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black; font-size: 0.95rem;">
                         <li style="margin-bottom: 0.5rem;">Small developers struggle to monetize efficiently</li>
@@ -547,7 +592,7 @@
                     </ul>
                 </div>
                 <div class="card">
-                    <div class="card-icon">🔒</div>
+                    <div class="card-icon"><svg><use href="#icon-lock"/></svg></div>
                     <h3>Trust Issues</h3>
                     <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black; font-size: 0.95rem;">
                         <li style="margin-bottom: 0.5rem;">Gamers fear games might "die" or servers close</li>
@@ -555,7 +600,7 @@
                     </ul>
                 </div>
                 <div class="card">
-                    <div class="card-icon">👀</div>
+                    <div class="card-icon"><svg><use href="#icon-eye"/></svg></div>
                     <h3>Visibility Gap</h3>
                     <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black; font-size: 0.95rem;">
                         <li style="margin-bottom: 0.5rem;">Small studios lack marketing budgets to stand out</li>
@@ -566,7 +611,6 @@
         </div>
     </div>
 
-    <!-- Slide 2: Solution -->
     <div class="slide">
         <div class="slide-content">
             <div class="slide-header">
@@ -575,7 +619,8 @@
             </div>
             <div class="grid-2">
                 <div class="card">
-                    <h3>🔄 Enabling Trades</h3>
+                    <div class="card-icon"><svg><use href="#icon-refresh"/></svg></div>
+                    <h3>Enabling Trades</h3>
                     <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
                         <li style="margin-bottom: 0.5rem;">Legal and safe trading environment</li>
                         <li style="margin-bottom: 0.5rem;">Fully compliant with Game TOS</li>
@@ -583,23 +628,26 @@
                     </ul>
                 </div>
                 <div class="card">
-                    <h3>⚖️ MOR & Legal Wrapper</h3>
+                    <div class="card-icon"><svg><use href="#icon-scale"/></svg></div>
+                    <h3>MOR & Legal Wrapper</h3>
                     <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
                         <li style="margin-bottom: 0.5rem;">We act as the Merchant of Record</li>
                         <li style="margin-bottom: 0.5rem;">Developers just plug us in</li>
-                        <li>We handle all legal complexity</li>
+                        <li>We handle store complexity</li>
                     </ul>
                 </div>
                 <div class="card">
-                    <h3>🛡️ Asset Retention</h3>
+                    <div class="card-icon"><svg><use href="#icon-shield"/></svg></div>
+                    <h3>Asset Retention</h3>
                     <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
                         <li style="margin-bottom: 0.5rem;">Banned players retain asset ownership</li>
-                        <li style="margin-bottom: 0.5rem;">Market access remains open for selling</li>
+                        <li style="margin-bottom: 0.5rem;">Market access remains open for trading</li>
                         <li>Investment is never lost due to bans</li>
                     </ul>
                 </div>
                 <div class="card">
-                    <h3>💰 Sustainable Revenue</h3>
+                    <div class="card-icon"><svg><use href="#icon-money"/></svg></div>
+                    <h3>Sustainable Revenue</h3>
                     <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
                         <li style="margin-bottom: 0.5rem;">Developers earn fees on every trade</li>
                         <li>Turns secondary market into primary revenue</li>
@@ -609,54 +657,116 @@
         </div>
     </div>
 
-    <!-- Slide 3: Market Opportunity -->
     <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <h2>Market Opportunity</h2>
-                <p>Explosive growth in the Indie Game Sector (2027-2029 Estimate)</p>
-            </div>
+    <style>
+        /* CSS to ensure charts look correct */
+        .chart-container {
+            display: flex;
+            align-items: flex-end; /* Aligns bars to bottom */
+            height: 300px; /* Fixed height is required for percentages to work */
+            padding-top: 20px;
+            position: relative;
+            border-bottom: 0px solid #cbd5e1; /* The baseline axis */
+        }
+
+        .y-axis {
+            display: flex;
+            flex-direction: column-reverse; /* Starts 0 at bottom */
+            justify-content: space-between; /* Spreads ticks evenly */
+            height: 95%;
+            margin-right: 20px;
+            color: #64748b;
+            font-weight: bold;
+            font-size: 0.85rem;
+            padding-bottom: 0; /* Align 0 with border */
+        }
+
+        /* Adjust ticks to center on the line height visually */
+        .y-axis span {
+            transform: translateY(50%); 
+        }
+        .y-axis span:first-child { transform: translateY(0); } /* Keep $0 on line */
+        .y-axis span:last-child { transform: translateY(0); } /* Keep Top on line */
+
+        .bar-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Pushes bar to bottom */
+            align-items: center;
+            height: 100%;
+            position: relative;
+        }
+
+        .bar {
+            width: 60px;
+            background-color: #4f46e5; /* Primary Blue */
+            border-radius: 8px 8px 0 0;
+            transition: height 0.5s ease;
+            position: relative;
+        }
+
+        .bar-label {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #475569;
+            font-size: 1.1rem;
+            position: absolute;
+            bottom: -35px; /* Puts year below the axis line */
+        }
+
+        /* Helper to space out the content below the chart */
+        .som-container {
+            margin-top: 4rem; 
+            text-align: center;
+        }
+    </style>
+
+    <div class="slide-content">
+        <div class="slide-header">
+            <h2>Market Opportunity</h2>
+            <p>Explosive growth in the Indie Game Sector (2027-2029 Estimate)</p>
+        </div>
+        
+        <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <h4 style="margin-bottom: 2rem;">Total Addressable Market (Indie Games)</h4>
             
-            <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                <h4 style="margin-bottom: 1rem;">Total Addressable Market (Indie Games)</h4>
-                <div class="chart-container">
-                    <div class="y-axis">
-                        <span>$125B</span>
-                        <span>$100B</span>
-                        <span>$75B</span>
-                        <span>$50B</span>
-                        <span>$25B</span>
-                        <span>$0</span>
-                    </div>
-                    <!-- Scale Max: $125B -->
-                    <!-- 2027: $70B / 125 = 56% -->
-                    <div class="bar-group">
-                        <div class="bar" style="height: 56%;" data-value="$70B"></div>
-                        <div class="bar-label">2027</div>
-                    </div>
-                    <!-- 2028: $84B / 125 = 67.2% -->
-                    <div class="bar-group">
-                        <div class="bar" style="height: 67.2%;" data-value="$84B"></div>
-                        <div class="bar-label">2028</div>
-                    </div>
-                    <!-- 2029: $100.8B / 125 = 80.64% -->
-                    <div class="bar-group">
-                        <div class="bar" style="height: 80.6%;" data-value="$100.8B"></div>
-                        <div class="bar-label">2029</div>
-                    </div>
+            <div class="chart-container">
+                <div class="y-axis">
+                    <span>$0</span>
+                    <span>$25B</span>
+                    <span>$50B</span>
+                    <span>$75B</span>
+                    <span>$100B</span>
+                    <span>$125B</span>
                 </div>
-                <div style="margin-top: 2rem; text-align: center;">
-                    <div>
-                        <h4>Obtainable Market (SOM)</h4>
-                        <p style="font-size: 2.5rem; color: var(--primary); font-family: 'Rajdhani';">$5.04 Billion</p>
-                        <p style="color: #64748b; font-size: 0.9rem;">By 2029 (5% of Total Market)</p>
-                    </div>
+                
+                <div class="bar-group">
+                    <div class="bar" style="height: 56%; background-color: #4f83f1;"></div>
+                    <div class="bar-label">2027</div>
+                </div>
+
+                <div class="bar-group">
+                    <div class="bar" style="height: 67.2%; background-color: #4576ef;"></div>
+                    <div class="bar-label">2028</div>
+                </div>
+
+                <div class="bar-group">
+                    <div class="bar" style="height: 80%; background-color: #3b69ea;"></div>
+                    <div class="bar-label">2029</div>
+                </div>
+            </div>
+            <div class="som-container">
+                <div>
+                    <h4>Obtainable Market (SOM)</h4>
+                    <p style="font-size: 3.5rem; font-weight: 700; color: #3b69ea; line-height: 1; margin: 10px 0;">$5 Billion</p>
+                    <p style="color: #64748b; font-size: 1rem;">By 2029 (5% of Total Market)</p>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 
-    <!-- Slide 4: Revenue Streams -->
     <div class="slide">
         <div class="slide-content">
             <div class="slide-header">
@@ -665,17 +775,17 @@
             </div>
             <div class="grid-3">
                 <div class="card" style="text-align: center;">
-                    <div style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;">5%</div>
+                    <div style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem; font-family: 'Rajdhani', sans-serif;">5%</div>
                     <h3 style="color: black;">Trade Fee</h3>
                     <p>Commission on every peer-to-peer asset exchange on the platform</p>
                 </div>
                 <div class="card" style="text-align: center;">
-                    <div style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;">5%</div>
+                    <div style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem; font-family: 'Rajdhani', sans-serif;">5%</div>
                     <h3 style="color: black;">Minting Fee</h3>
                     <p>Initial fee when buying our currency to buy in game content<br><span style="font-size: 0.9rem; color: #64748b;">(fixed fee of 0.5$)</span></p>
                 </div>
                 <div class="card" style="text-align: center;">
-                    <div style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;">Ads</div>
+                    <div style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem; font-family: 'Rajdhani', sans-serif;">Ads</div>
                     <h3 style="color: black;">Advertising</h3>
                     <p>Strategic placements for games and gaming hardware within the marketplace</p>
                 </div>
@@ -683,7 +793,6 @@
         </div>
     </div>
 
-    <!-- Slide 5: Roadmap -->
     <div class="slide">
         <div class="slide-content">
             <div class="slide-header">
@@ -693,25 +802,29 @@
             <div class="timeline">
                 <div class="timeline-container left">
                     <div class="timeline-content">
-                        <h3>Phase 1 (3 Months)</h3>
+                        <h3>Phase 1</h3>
+                        <h2>2026 Q1</h2>
                         <p>System Architecture Design & Core Implementation</p>
                     </div>
                 </div>
                 <div class="timeline-container right">
                     <div class="timeline-content">
-                        <h3>Phase 2 (6 Months)</h3>
+                        <h3>Phase 2</h3>
+                        <h2>2026 Q2/Q3</h2>
                         <p>Full Development & Client-side API Integration</p>
                     </div>
                 </div>
                 <div class="timeline-container left">
                     <div class="timeline-content">
-                        <h3>Phase 3 (3 Months)</h3>
+                        <h3>Phase 3</h3>
+                        <h2>2026 Q4</h2>
                         <p>Penetration Testing & Load Testing for Security. Beta Launch</p>
                     </div>
                 </div>
                 <div class="timeline-container right">
                     <div class="timeline-content">
-                        <h3>Phase 4 (1 Year)</h3>
+                        <h3>Phase 4</h3>
+                        <h2>2027</h2>
                         <p>Official Launch, Aggressive Marketing & Ecosystem Growth</p>
                     </div>
                 </div>
@@ -719,7 +832,6 @@
         </div>
     </div>
 
-    <!-- Slide 6: Marketing -->
     <div class="slide">
         <div class="slide-content">
             <div class="slide-header">
@@ -728,28 +840,32 @@
             </div>
             <div class="grid-2">
                 <div class="card">
-                    <h3>🤝 Developer Partnerships</h3>
+                    <div class="card-icon"><svg><use href="#icon-users"/></svg></div>
+                    <h3>Developer Partnerships</h3>
                     <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
                         <li style="margin-bottom: 0.5rem;">Direct integration incentives</li>
                         <li>Developers become advocates via revenue share</li>
                     </ul>
                 </div>
                 <div class="card">
-                    <h3>📢 Influencer Campaigns</h3>
+                    <div class="card-icon"><svg><use href="#icon-megaphone"/></svg></div>
+                    <h3>Influencer Campaigns</h3>
                     <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
                         <li style="margin-bottom: 0.5rem;">Targeted ads on Twitch and YouTube</li>
                         <li>Streamers demonstrating live trading</li>
                     </ul>
                 </div>
                 <div class="card">
-                    <h3>🎪 Events & Conventions</h3>
+                    <div class="card-icon"><svg><use href="#icon-ticket"/></svg></div>
+                    <h3>Events & Conventions</h3>
                     <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
                         <li style="margin-bottom: 0.5rem;">Booths at PAX, GDC, and Gamescom</li>
                         <li>Direct onboarding of indie studios</li>
                     </ul>
                 </div>
                 <div class="card">
-                    <h3>🎮 Organic Growth</h3>
+                    <div class="card-icon"><svg><use href="#icon-gamepad"/></svg></div>
+                    <h3>Organic Growth</h3>
                     <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black;">
                         <li style="margin-bottom: 0.5rem;">Games themselves market EMID</li>
                         <li>In-game "Trade on EMID" UI integration</li>
@@ -759,7 +875,6 @@
         </div>
     </div>
 
-    <!-- Slide 7: Team -->
     <div class="slide">
         <div class="slide-content">
             <div class="slide-header">
@@ -767,7 +882,6 @@
             </div>
             
             <div class="grid-2">
-                <!-- Edoardo -->
                 <div class="card team-card">
                     <div class="team-info">
                         <h3>Edoardo Schiatti</h3>
@@ -777,7 +891,6 @@
                     <img src="https://i.ibb.co/Gv4cvNvd/edo-pic.jpg" alt="Edoardo Schiatti" class="card-image">
                 </div>
 
-                <!-- Dobri -->
                 <div class="card team-card">
                     <div class="team-info">
                         <h3>Dobri Trifonov</h3>
@@ -787,7 +900,6 @@
                     <img src="https://i.ibb.co/GvT2yDWV/dobri-pic.jpg" alt="Dobri Trifonov" class="card-image">
                 </div>
 
-                <!-- Ilya -->
                 <div class="card team-card">
                     <div class="team-info">
                         <h3>Ilya Neuhen</h3>
@@ -797,7 +909,6 @@
                     <img src="https://i.ibb.co/20TwpdsZ/Ilya-pic.jpg" alt="Ilya Neuhen" class="card-image">
                 </div>
 
-                <!-- Massimiliano -->
                 <div class="card team-card">
                     <div class="team-info">
                         <h3>Massimiliano Nicol</h3>
@@ -810,7 +921,6 @@
         </div>
     </div>
 
-    <!-- Slide 8: Financials -->
     <div class="slide">
         <div class="slide-content">
             <div class="slide-header">
@@ -846,37 +956,37 @@
                         <tr>
                             <td>EMID Market Volume</td>
                             <td>-</td>
-                            <td>$70M</td>
-                            <td>$840M</td>
-                            <td>$5.04B</td>
+                            <td>$70,000,000</td>
+                            <td>$840,000,000</td>
+                            <td>$5,040,000,000</td>
                         </tr>
                         <tr>
                             <td>Traded Volume</td>
                             <td>-</td>
-                            <td>$8.4M</td>
-                            <td>$100.8M</td>
-                            <td>$604.8M</td>
+                            <td>$8,400,000</td>
+                            <td>$100,800,000</td>
+                            <td>$604,800,000</td>
                         </tr>
                         <tr>
                             <td>Revenue</td>
-                            <td>$0</td>
+                            <td>-</td>
                             <td>$840,000</td>
                             <td>$10,080,000</td>
                             <td>$60,480,000</td>
                         </tr>
                         <tr>
                             <td>Expenses</td>
-                            <td>-$146,000</td>
-                            <td>-$159,000</td>
-                            <td>-$850,000</td>
-                            <td>-$3,500,000</td>
+                            <td>-$194,000</td>
+                            <td>-$250,000</td>
+                            <td>-$1,018,000</td>
+                            <td>-$2,158,000</td>
                         </tr>
                         <tr style="background: #f0fdf4;">
                             <td style="font-weight: bold; color: black;">EBITDA</td>
-                            <td style="color: #dc2626; font-weight: bold;">-$146,000</td>
-                            <td style="color: #166534; font-weight: bold;">$681,000</td>
-                            <td style="color: #166534; font-weight: bold;">$9,230,000</td>
-                            <td style="color: #166534; font-weight: bold;">$56,980,000</td>
+                            <td style="color: #dc2626; font-weight: bold;">-$194,000</td>
+                            <td style="color: #166534; font-weight: bold;">$590,500</td>
+                            <td style="color: #166534; font-weight: bold;">$9,060,000</td>
+                            <td style="color: #166534; font-weight: bold;">$58,320,000</td>
                         </tr>
                     </tbody>
                 </table>
@@ -885,7 +995,6 @@
         </div>
     </div>
 
-    <!-- Slide 9: Ask (General) -->
     <div class="slide">
         <div class="slide-content">
             <div class="slide-header">
@@ -896,20 +1005,18 @@
             <div class="card" style="max-width: 900px; margin: 0 auto; padding: 2rem;">
                 <div style="text-align: center; margin-bottom: 2rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 1.5rem;">
                     <h3 style="font-size: 1.2rem; color: var(--secondary); margin-bottom: 0.5rem; letter-spacing: 2px;">SEED ROUND</h3>
-                    <div style="font-size: 4.5rem; font-family: 'Rajdhani'; color: var(--primary); font-weight: 700; line-height: 1;">$250,000</div>
+                    <div style="font-size: 4.5rem; font-family: 'Rajdhani'; color: var(--primary); font-weight: 700; line-height: 1;">$300,000</div>
                     <div style="font-size: 1.5rem; font-weight: 600; color: var(--text-color); margin-top: 0.5rem;">for 10% Equity</div>
                 </div>
 
                 <h4 style="margin-bottom: 1rem; color: var(--secondary); text-transform: uppercase; font-size: 0.9rem;">Allocation of Funds</h4>
                 
-                <!-- Stacked Bar Visualization -->
                 <div style="width: 100%; height: 30px; background: #e2e8f0; border-radius: 15px; overflow: hidden; display: flex; margin-bottom: 1.5rem;">
                     <div style="width: 70%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold;"></div>
                     <div style="width: 29%; background: var(--accent); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold;"></div>
                     <div style="width: 1%; background: #10b981;"></div>
                 </div>
 
-                <!-- Legend/Details -->
                 <div class="grid-3" style="gap: 1rem;">
                     <div style="text-align: center;">
                         <div style="color: var(--primary); font-size: 2.5rem; font-weight: 700; font-family: 'Rajdhani';">70%</div>
@@ -931,7 +1038,6 @@
         </div>
     </div>
 
-    <!-- Slide 10: Prototype (General) -->
     <div class="slide">
         <div class="slide-content">
             <div class="slide-header">
@@ -961,21 +1067,19 @@
         </div>
     </div>
 
-    <!-- Slide 11: Contact -->
     <div class="slide centered">
         <div class="slide-content" style="text-align: center;">
             <h1 style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;">Thank You</h1>
             <p style="font-size: 1.5rem; margin-bottom: 3rem;">Let's build the future of gaming economies</p>
             
             <div style="display: inline-block; text-align: left; background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                <p><strong>Email:</strong> Edoardo.schiatti@usi.ch</p>
+                <p><strong>Email:</strong> contact.chief@emid.ch</p>
                 <p><strong>Website:</strong> trade.trifonov.app</p>
                 <p><strong>Address:</strong> Lugano, Switzerland</p>
             </div>
         </div>
     </div>
 
-    <!-- Slide 12: Sources -->
     <div class="slide">
         <div class="slide-content">
             <div class="slide-header">
@@ -1013,7 +1117,6 @@
 
 </div>
 
-<!-- Navigation Controls -->
 <div class="controls">
     <button class="control-btn" onclick="prevSlide()">← Prev</button>
     <button class="control-btn" onclick="nextSlide()">Next →</button>
