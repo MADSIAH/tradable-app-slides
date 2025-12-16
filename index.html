@@ -76,15 +76,15 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            /* CHANGED: Align to top to keep titles in same spot */
-            justify-content: flex-start; 
+            /* CHANGED: Reverted to center alignment so title moves with content */
+            justify-content: center; 
             align-items: center;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.5s ease, transform 0.5s ease;
             transform: scale(0.95);
-            /* CHANGED: Fixed top padding for consistency - Moved up slightly as requested */
-            padding: 4rem 4rem 2rem 4rem; 
+            /* Standard padding */
+            padding: 2rem 4rem;
             background: radial-gradient(circle at top right, #eef2ff 0%, #ffffff 40%);
         }
 
@@ -106,10 +106,11 @@
             width: 100%;
             position: relative;
             z-index: 2;
+            /* Removed fixed height flex layout */
         }
 
         .slide-header {
-            margin-bottom: 3rem; /* Increased slightly for separation */
+            margin-bottom: 2rem; /* Restored margin */
             border-left: 5px solid var(--primary);
             padding-left: 1.5rem;
         }
@@ -771,7 +772,7 @@
                     <div class="team-info">
                         <h3>Edoardo Schiatti</h3>
                         <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.2rem; text-transform: uppercase;">CEO</p>
-                        <p style="font-size: 0.85rem; color: var(--secondary); line-height: 1.3;">Master in Finance and Bachelor in Economics & Management, experience in M&A, Software dev and business operations, founder of tutoring startup</p>
+                        <p style="font-size: 0.85rem; color: var(--secondary); line-height: 1.3;">Master in finance and bachelor in Economics management, experience in M&A, Software dev and business operations, founder of tutoring startup</p>
                     </div>
                     <img src="https://i.ibb.co/Gv4cvNvd/edo-pic.jpg" alt="Edoardo Schiatti" class="card-image">
                 </div>
@@ -781,7 +782,7 @@
                     <div class="team-info">
                         <h3>Dobri Trifonov</h3>
                         <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.2rem; text-transform: uppercase;">CTO</p>
-                        <p style="font-size: 0.85rem; color: var(--secondary); line-height: 1.3;">Bachelor in Informatics, Master in FinTech, expert in POS systems</p>
+                        <p style="font-size: 0.85rem; color: var(--secondary); line-height: 1.3;">Bachelor in informatics, master in fintech, expert in POS systems</p>
                     </div>
                     <img src="https://i.ibb.co/GvT2yDWV/dobri-pic.jpg" alt="Dobri Trifonov" class="card-image">
                 </div>
@@ -816,69 +817,71 @@
                 <h2>Financial Projections</h2>
                 <p>Projected Growth 2026-2029</p>
             </div>
-            <table class="financial-table">
-                <thead>
-                    <tr>
-                        <th>Metric</th>
-                        <th>2026</th>
-                        <th>2027</th>
-                        <th>2028</th>
-                        <th>2029</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Team Size</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>10</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <td>Market Share</td>
-                        <td>-</td>
-                        <td>0.1%</td>
-                        <td>1.0%</td>
-                        <td>5.0%</td>
-                    </tr>
-                    <tr>
-                        <td>EMID Market Volume</td>
-                        <td>-</td>
-                        <td>$70M</td>
-                        <td>$840M</td>
-                        <td>$5.04B</td>
-                    </tr>
-                    <tr>
-                        <td>Traded Volume</td>
-                        <td>-</td>
-                        <td>$8.4M</td>
-                        <td>$100.8M</td>
-                        <td>$604.8M</td>
-                    </tr>
-                    <tr>
-                        <td>Revenue</td>
-                        <td>$0</td>
-                        <td>$840,000</td>
-                        <td>$10,080,000</td>
-                        <td>$60,480,000</td>
-                    </tr>
-                    <tr>
-                        <td>Expenses</td>
-                        <td>-$146,000</td>
-                        <td>-$159,000</td>
-                        <td>-$850,000</td>
-                        <td>-$3,500,000</td>
-                    </tr>
-                    <tr style="background: #f0fdf4;">
-                        <td style="font-weight: bold; color: black;">EBITDA</td>
-                        <td style="color: #dc2626; font-weight: bold;">-$146,000</td>
-                        <td style="color: #166534; font-weight: bold;">$681,000</td>
-                        <td style="color: #166534; font-weight: bold;">$9,230,000</td>
-                        <td style="color: #166534; font-weight: bold;">$56,980,000</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p style="margin-top: 1rem; font-size: 0.8rem; color: #94a3b8; text-align: center;">Source: EMID Financial Model 2026-2029</p>
+            <div>
+                <table class="financial-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>2026</th>
+                            <th>2027</th>
+                            <th>2028</th>
+                            <th>2029</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Team Size</td>
+                            <td>4</td>
+                            <td>4</td>
+                            <td>10</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>Market Share</td>
+                            <td>-</td>
+                            <td>0.1%</td>
+                            <td>1.0%</td>
+                            <td>5.0%</td>
+                        </tr>
+                        <tr>
+                            <td>EMID Market Volume</td>
+                            <td>-</td>
+                            <td>$70M</td>
+                            <td>$840M</td>
+                            <td>$5.04B</td>
+                        </tr>
+                        <tr>
+                            <td>Traded Volume</td>
+                            <td>-</td>
+                            <td>$8.4M</td>
+                            <td>$100.8M</td>
+                            <td>$604.8M</td>
+                        </tr>
+                        <tr>
+                            <td>Revenue</td>
+                            <td>$0</td>
+                            <td>$840,000</td>
+                            <td>$10,080,000</td>
+                            <td>$60,480,000</td>
+                        </tr>
+                        <tr>
+                            <td>Expenses</td>
+                            <td>-$146,000</td>
+                            <td>-$159,000</td>
+                            <td>-$850,000</td>
+                            <td>-$3,500,000</td>
+                        </tr>
+                        <tr style="background: #f0fdf4;">
+                            <td style="font-weight: bold; color: black;">EBITDA</td>
+                            <td style="color: #dc2626; font-weight: bold;">-$146,000</td>
+                            <td style="color: #166534; font-weight: bold;">$681,000</td>
+                            <td style="color: #166534; font-weight: bold;">$9,230,000</td>
+                            <td style="color: #166534; font-weight: bold;">$56,980,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 1rem; font-size: 0.8rem; color: #94a3b8; text-align: center;">Source: EMID Financial Model 2026-2029</p>
+            </div>
         </div>
     </div>
 
@@ -935,24 +938,26 @@
                 <h2>Prototype</h2>
                 <p>Experience the Platform</p>
             </div>
-            <div class="mockup-container">
-                <div class="browser-bar">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                </div>
-                <div class="mockup-screen">
-                    <div style="text-align: center;">
-                        <svg style="width: 60px; height: 60px; margin-bottom: 1rem; color: #ccc;"><use href="#logo-icon"/></svg>
-                        <h3 style="color: #333;">Live Demo</h3>
-                        <div style="width: 150px; height: 150px; background: #eee; margin: 1rem auto; display: flex; align-items: center; justify-content: center;">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://trade.trifonov.app/" alt="QR Code to trade.trifonov.app">
+            <div>
+                <div class="mockup-container">
+                    <div class="browser-bar">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <div class="mockup-screen">
+                        <div style="text-align: center;">
+                            <svg style="width: 60px; height: 60px; margin-bottom: 1rem; color: #ccc;"><use href="#logo-icon"/></svg>
+                            <h3 style="color: #333;">Live Demo</h3>
+                            <div style="width: 150px; height: 150px; background: #eee; margin: 1rem auto; display: flex; align-items: center; justify-content: center;">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://trade.trifonov.app/" alt="QR Code to trade.trifonov.app">
+                            </div>
+                            <p style="color: #666;">Scan to view mobile trade interface</p>
                         </div>
-                        <p style="color: #666;">Scan to view mobile trade interface</p>
                     </div>
                 </div>
+                <p style="text-align: center; margin-top: 2rem;">Visit <strong>trade.trifonov.app</strong> for live demo</p>
             </div>
-            <p style="text-align: center; margin-top: 2rem;">Visit <strong>trade.trifonov.app</strong> for live demo</p>
         </div>
     </div>
 
