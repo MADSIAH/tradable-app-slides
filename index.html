@@ -76,14 +76,22 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            /* CHANGED: Align to top to keep titles in same spot */
+            justify-content: flex-start; 
             align-items: center;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.5s ease, transform 0.5s ease;
             transform: scale(0.95);
-            padding: 2rem 4rem;
+            /* CHANGED: Fixed top padding for consistency - Moved up slightly as requested */
+            padding: 4rem 4rem 2rem 4rem; 
             background: radial-gradient(circle at top right, #eef2ff 0%, #ffffff 40%);
+        }
+
+        /* Special class for Title and Thank You slides to remain centered */
+        .slide.centered {
+            justify-content: center;
+            padding: 2rem 4rem;
         }
 
         .slide.active {
@@ -101,7 +109,7 @@
         }
 
         .slide-header {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem; /* Increased slightly for separation */
             border-left: 5px solid var(--primary);
             padding-left: 1.5rem;
         }
@@ -164,6 +172,32 @@
             margin-bottom: 1rem;
             font-size: 1.5rem;
             font-weight: bold;
+        }
+        
+        /* New Style for Team Images */
+        .card-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            background-color: #e2e8f0;
+            flex-shrink: 0;
+            margin-left: 1.5rem;
+        }
+
+        /* Specific style for Team Cards to align image right */
+        .team-card {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+            padding: 1.5rem;
+        }
+
+        .team-info {
+            flex: 1;
         }
 
         .card h3 {
@@ -483,7 +517,7 @@
 <div id="deck">
 
     <!-- Slide 0: Title -->
-    <div class="slide active">
+    <div class="slide centered active">
         <svg class="decoration floating-item" style="top: 10%; left: 10%; width: 100px; color: var(--primary);"><use href="#icon-shield"/></svg>
         <svg class="decoration floating-item" style="bottom: 15%; right: 10%; width: 80px; color: var(--accent); animation-delay: 1s;"><use href="#icon-coin"/></svg>
         
@@ -512,7 +546,7 @@
                     </ul>
                 </div>
                 <div class="card">
-                    <div class="card-icon">👻</div>
+                    <div class="card-icon">🔒</div>
                     <h3>Trust Issues</h3>
                     <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: black; font-size: 0.95rem;">
                         <li style="margin-bottom: 0.5rem;">Gamers fear games might "die" or servers close</li>
@@ -733,35 +767,43 @@
             
             <div class="grid-2">
                 <!-- Edoardo -->
-                <div class="card">
-                    <div class="card-icon"><svg style="width: 30px; height: 30px; color: white;"><use href="#logo-icon"/></svg></div>
-                    <h3>Edoardo Schiatti</h3>
-                    <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem; text-transform: uppercase;">CEO</p>
-                    <p>Master in digital finance, previous ventures</p>
+                <div class="card team-card">
+                    <div class="team-info">
+                        <h3>Edoardo Schiatti</h3>
+                        <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.2rem; text-transform: uppercase;">CEO</p>
+                        <p style="font-size: 0.85rem; color: var(--secondary); line-height: 1.3;">Master in Finance and Bachelor in Economics & Management, experience in M&A, Software dev and business operations, founder of tutoring startup</p>
+                    </div>
+                    <img src="https://i.ibb.co/Gv4cvNvd/edo-pic.jpg" alt="Edoardo Schiatti" class="card-image">
                 </div>
 
                 <!-- Dobri -->
-                <div class="card">
-                    <div class="card-icon"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-programmer"/></svg></div>
-                    <h3>Dobri Trifonov</h3>
-                    <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem; text-transform: uppercase;">CTO</p>
-                    <p>Bachelor in informatics, master in fintech, expert in POS systems</p>
+                <div class="card team-card">
+                    <div class="team-info">
+                        <h3>Dobri Trifonov</h3>
+                        <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.2rem; text-transform: uppercase;">CTO</p>
+                        <p style="font-size: 0.85rem; color: var(--secondary); line-height: 1.3;">Bachelor in Informatics, Master in FinTech, expert in POS systems</p>
+                    </div>
+                    <img src="https://i.ibb.co/GvT2yDWV/dobri-pic.jpg" alt="Dobri Trifonov" class="card-image">
                 </div>
 
                 <!-- Ilya -->
-                <div class="card">
-                    <div class="card-icon"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-money"/></svg></div>
-                    <h3>Ilya Neuhen</h3>
-                    <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem; text-transform: uppercase;">CFO</p>
-                    <p>Master in finance and fintech, trading and balance sheet analyst</p>
+                <div class="card team-card">
+                    <div class="team-info">
+                        <h3>Ilya Neuhen</h3>
+                        <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.2rem; text-transform: uppercase;">CFO</p>
+                        <p style="font-size: 0.85rem; color: var(--secondary); line-height: 1.3;">Master in FinTech and Finance, experience in customer service and finance; responsible for financial planning and control</p>
+                    </div>
+                    <img src="https://i.ibb.co/20TwpdsZ/Ilya-pic.jpg" alt="Ilya Neuhen" class="card-image">
                 </div>
 
                 <!-- Massimiliano -->
-                <div class="card">
-                    <div class="card-icon"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-sales"/></svg></div>
-                    <h3>Massimiliano Nicol</h3>
-                    <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem; text-transform: uppercase;">CMO</p>
-                    <p>Master in Fintech, works in sales and marketing</p>
+                <div class="card team-card">
+                    <div class="team-info">
+                        <h3>Massimiliano Nicol</h3>
+                        <p style="color: var(--primary); font-weight: 600; margin-bottom: 0.2rem; text-transform: uppercase;">CMO</p>
+                        <p style="font-size: 0.85rem; color: var(--secondary); line-height: 1.3;">Master in FinTech, worked in sales and marketing, previous ventures experience</p>
+                    </div>
+                    <img src="https://i.ibb.co/ZpRYc9FG/massi-pic.png" alt="Massimiliano Nicol" class="card-image">
                 </div>
             </div>
         </div>
@@ -836,7 +878,7 @@
                     </tr>
                 </tbody>
             </table>
-            <p style="margin-top: 1rem; font-size: 0.8rem; color: #94a3b8; text-align: center;">Source: MIDE Financial Model 2026-2029</p>
+            <p style="margin-top: 1rem; font-size: 0.8rem; color: #94a3b8; text-align: center;">Source: EMID Financial Model 2026-2029</p>
         </div>
     </div>
 
@@ -874,7 +916,7 @@
                     <div style="text-align: center;">
                         <div style="color: var(--accent); font-size: 2.5rem; font-weight: 700; font-family: 'Rajdhani';">29%</div>
                         <div style="font-weight: 700; margin-bottom: 0.2rem;">Marketing</div>
-                        <div style="font-size: 0.9rem; color: var(--secondary);">Launch Campaign</div>
+                        <div style="font-size: 0.9rem; color: var(--secondary);">Launch Campaign and Advertising</div>
                     </div>
                     <div style="text-align: center;">
                         <div style="color: #10b981; font-size: 2.5rem; font-weight: 700; font-family: 'Rajdhani';">1%</div>
@@ -915,7 +957,7 @@
     </div>
 
     <!-- Slide 11: Contact -->
-    <div class="slide">
+    <div class="slide centered">
         <div class="slide-content" style="text-align: center;">
             <h1 style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;">Thank You</h1>
             <p style="font-size: 1.5rem; margin-bottom: 3rem;">Let's build the future of gaming economies</p>
@@ -937,7 +979,22 @@
             </div>
             <ul style="list-style: none; padding: 0;">
                 <li style="background: white; padding: 1rem; border-bottom: 1px solid #eee;">
-                    <strong>Market Data:</strong> MIDE Financial Model (2026-2029 Projections)
+                    <strong>Financial Projections:</strong> EMID Financial Model (2026-2029 Projections)
+                </li>
+                <li style="background: white; padding: 1rem; border-bottom: 1px solid #eee;">
+                    <strong>Global Market & Mobile Revenue:</strong> Boston Consulting Group (BCG), Dec 2025 - $263B Total Market
+                </li>
+                <li style="background: white; padding: 1rem; border-bottom: 1px solid #eee;">
+                    <strong>Loot Box Revenue Forecast:</strong> Juniper Research - $20B by 2025
+                </li>
+                <li style="background: white; padding: 1rem; border-bottom: 1px solid #eee;">
+                    <strong>CS2 Skins Economy:</strong> PriceEmpire / BitSkins, Oct 2025 - Market Cap Analysis
+                </li>
+                <li style="background: white; padding: 1rem; border-bottom: 1px solid #eee;">
+                    <strong>Global Games Market:</strong> Newzoo, Sept 2025 - $188.8B Estimate
+                </li>
+                <li style="background: white; padding: 1rem; border-bottom: 1px solid #eee;">
+                    <strong>Technical & Cost:</strong> EMID database design v4 & cost
                 </li>
                 <li style="background: white; padding: 1rem; border-bottom: 1px solid #eee;">
                     <strong>Website & Concept:</strong> https://trade.trifonov.app/
