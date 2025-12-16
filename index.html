@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMID - Fintech Pitch Deck</title>
+    <title>EMID - Fintech Pitch Deck (Print Version)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
@@ -81,10 +81,12 @@
             pointer-events: none;
             transition: opacity 0.5s ease, transform 0.5s ease;
             transform: scale(0.95);
+            /* Standard padding */
             padding: 2rem 4rem;
             background: radial-gradient(circle at top right, #eef2ff 0%, #ffffff 40%);
         }
 
+        /* Special class for Title and Thank You slides to remain centered */
         .slide.centered {
             justify-content: center;
             padding: 2rem 4rem;
@@ -105,7 +107,7 @@
         }
 
         .slide-header {
-            margin-bottom: 2rem; 
+            margin-bottom: 2rem;
             border-left: 5px solid var(--primary);
             padding-left: 1.5rem;
         }
@@ -468,6 +470,79 @@
             color: #94a3b8;
             margin-top: 2rem;
             display: block;
+        }
+
+        /* =========================================
+           PRINT SETTINGS (AI OPTIMIZED)
+           ========================================= */
+        @media print {
+            @page {
+                size: 1920px 1080px landscape; /* Force 16:9 ratio */
+                margin: 0; /* Remove default page margins */
+            }
+
+            body, html {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                background-color: white; /* Ensure white background */
+                -webkit-print-color-adjust: exact !important; /* Force background colors */
+                print-color-adjust: exact !important;
+                overflow: visible !important;
+            }
+
+            /* Hide User Interface */
+            .controls, .progress-bar, .decoration, .floating-item {
+                display: none !important;
+            }
+
+            /* Stack Slides for PDF Export */
+            #deck {
+                height: auto !important;
+                display: block !important;
+                position: relative !important;
+            }
+
+            .slide {
+                position: relative !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+                left: auto !important;
+                top: auto !important;
+                width: 100vw !important;
+                height: 100vh !important; /* Full page height */
+                
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                
+                /* Force Page Breaks */
+                break-after: page !important;
+                page-break-after: always !important;
+                break-inside: avoid !important;
+                
+                margin: 0 !important;
+                padding: 2rem 4rem !important; /* Restore padding */
+                border: none !important;
+                /* Force background */
+                background: radial-gradient(circle at top right, #eef2ff 0%, #ffffff 40%) !important; 
+            }
+            
+            /* FIX: Disable blue edges (Hover effects) */
+            .card {
+                transform: none !important;
+                border-color: #e2e8f0 !important; /* Original gray border */
+                box-shadow: none !important; /* Cleaner look for print */
+            }
+            
+            /* Remove all animations */
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
         }
 
     </style>
